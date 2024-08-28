@@ -49,7 +49,7 @@ sheet_name = 'appswithip'  # Update this with the name of your sheet if necessar
 # Read the spreadsheet into a DataFrame
 df = pd.read_csv(file_path)
 
-# Assuming the data is in the first column
+# Assuming the data is in the 4th column or D
 data = df.iloc[:, 3].tolist()
 
 prefix_counts, prefix_to_items = get_prefix_counts_with_items(data)
