@@ -22,13 +22,15 @@ def get_prefix_counts_with_items(data):
     # Count the frequency of each prefix
     prefix_counts = Counter(filtered_prefixes)
 
-    # Map each prefix to the list of items from the original data that contain that prefix
+    # Map each prefix to the list of items from the original data that start with that prefix
     prefix_to_items = defaultdict(list)
     for item in data:
         item_prefixes = split_words(item)
-        for prefix in item_prefixes:
-            if len(prefix) > 1:
-                prefix_to_items[prefix].append(item)
+        if item_prefixes and len(item_prefixes[0]) > 1:
+            prefix_to_items[item_prefixes[0]].append(item)
+
+    # Filter out prefixes that are not at the beginning of any item
+    prefix_counts = {prefix: count for prefix, count in prefix_counts.items() if prefix in prefix_to_items}
 
     return prefix_counts, prefix_to_items
 
@@ -43,7 +45,7 @@ data = [
 ]
 
 # Load data from spreadsheet
-file_path = '/Users/paulyuk/data/networkquery.csv'  # Update this with the path to your spreadsheet
+file_path = '/Users/paulyuk/data/export4.csv'  # Update this with the path to your spreadsheet
 sheet_name = 'appswithip'  # Update this with the name of your sheet if necessary
 
 # Read the spreadsheet into a DataFrame
